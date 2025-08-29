@@ -1,4 +1,5 @@
 import { db, collection, getDocs } from './admin.html';
+import { launchConfetti } from './confetti.js';
 
 const participantsDiv = document.getElementById("participants");
 const countSpan = document.getElementById("count");
@@ -18,7 +19,7 @@ async function getParticipants() {
   return participants;
 }
 
-// Spin the wheel for 30 participants only
+// Spin the wheel for 30 participants only with animation
 spinBtn.onclick = async () => {
   const participants = await getParticipants();
   if(participants.length === 0) return alert("No participants yet!");
@@ -28,13 +29,36 @@ spinBtn.onclick = async () => {
   if(participants.length <= 30){
     pool = participants;
   } else {
-    // Randomly select 30 participants from all
     const shuffled = participants.sort(() => 0.5 - Math.random());
     pool = shuffled.slice(0, 30);
   }
 
-  const winner = pool[Math.floor(Math.random() * pool.length)];
-  winnerP.innerText = `${winner.name} - ${winner.number}`;
+  // Simple visual spin animation
+  const wheelText = document.createElement("div");
+  wheelText.style.fontSize = "2rem";
+  wheelText.style.margin = "20px";
+  wheelText.style.animation = "spin 3s ease-out";
+  document.body.appendChild(wheelText);
+
+  const spinDuration = 3000;
+  const start = Date.now();
+
+  function animateSpin() {
+    const now = Date.now();
+    const progress = (now-start)/spinDuration;
+    const index = Math.floor(progress * pool.length);
+    wheelText.innerText = pool[index % pool.length].number;
+    if(progress < 1){
+      requestAnimationFrame(animateSpin);
+    } else {
+      const winner = pool[Math.floor(Math.random() * pool.length)];
+      winnerP.innerText = `${winner.name} - ${winner.number}`;
+      launchConfetti();
+      document.body.removeChild(wheelText);
+    }
+  }
+
+  animateSpin();
 };
 
 getParticipants();

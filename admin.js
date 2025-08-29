@@ -18,11 +18,22 @@ async function getParticipants() {
   return participants;
 }
 
-// Spin the wheel
+// Spin the wheel for 30 participants only
 spinBtn.onclick = async () => {
   const participants = await getParticipants();
   if(participants.length === 0) return alert("No participants yet!");
-  const winner = participants[Math.floor(Math.random() * participants.length)];
+
+  // Pick 30 participants randomly (or all if less than 30)
+  let pool = [];
+  if(participants.length <= 30){
+    pool = participants;
+  } else {
+    // Randomly select 30 participants from all
+    const shuffled = participants.sort(() => 0.5 - Math.random());
+    pool = shuffled.slice(0, 30);
+  }
+
+  const winner = pool[Math.floor(Math.random() * pool.length)];
   winnerP.innerText = `${winner.name} - ${winner.number}`;
 };
 

@@ -7,7 +7,7 @@ const confirmation = document.getElementById('confirmation');
 
 const allNumbers = Array.from({length: 1001}, (_, i) => 300 + i); // 300-1300
 
-// Render seats for layout
+// Render seats layout
 async function renderSeats() {
   seatGrid.innerHTML = "";
   const snapshot = await getDocs(collection(db, "participants"));
@@ -27,12 +27,13 @@ async function assignNumber(name) {
   const snapshot = await getDocs(collection(db, "participants"));
   const takenNumbers = snapshot.docs.map(doc => doc.data().number);
 
-  if(snapshot.docs.length >= 30) {
-    confirmation.innerText = "Sorry, the lucky draw is full (30 participants).";
+  // Check if all numbers are assigned
+  const availableNumbers = allNumbers.filter(n => !takenNumbers.includes(n));
+  if(availableNumbers.length === 0){
+    confirmation.innerText = "Sorry, all lucky numbers (300–1300) have been assigned!";
     return;
   }
 
-  const availableNumbers = allNumbers.filter(n => !takenNumbers.includes(n));
   const randomIndex = Math.floor(Math.random() * availableNumbers.length);
   const assignedNumber = availableNumbers[randomIndex];
 

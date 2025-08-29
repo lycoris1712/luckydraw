@@ -7,19 +7,23 @@ const ctx = canvas.getContext("2d");
 const radius = 200;
 const center = {x: radius, y: radius};
 
-let participants = [];
-for(let i=300; i<=1300; i++){
+// Local participant list (simulate what tourists picked)
+let participants = []; // will be updated by manual adding or sync later
+
+// Example: for testing, pre-fill some participants
+for(let i=300; i<=350; i++){ // just 50 for test
   participants.push({name: "User"+i, number: i});
 }
 
-function drawWheel(participants, rotation=0){
-  const segments = participants.length;
+// Draw wheel segments
+function drawWheel(list, rotation=0){
+  const segments = list.length;
   const angle = 2 * Math.PI / segments;
   ctx.clearRect(0,0,400,400);
-  participants.forEach((p,i)=>{
+  list.forEach((p,i)=>{
     ctx.beginPath();
     ctx.moveTo(center.x, center.y);
-    ctx.arc(center.x, center.y, radius, i*angle+rotation, (i+1)*angle+rotation);
+    ctx.arc(center.x, center.y, radius, i*angle + rotation, (i+1)*angle + rotation);
     ctx.fillStyle = i%2===0 ? "#4caf50" : "#2196f3";
     ctx.fill();
     ctx.stroke();
@@ -34,8 +38,14 @@ function drawWheel(participants, rotation=0){
   });
 }
 
+// Spin wheel function
 function spinWheel(){
-  const spinParticipants = participants.slice(0,30);
+  const spinParticipants = participants.slice(0,30); // pick first 30
+  if(spinParticipants.length === 0){
+    alert("No participants!");
+    return;
+  }
+
   let rotation = 0;
   const spinTime = 4000;
   const start = Date.now();
@@ -60,6 +70,7 @@ function spinWheel(){
   animate();
 }
 
+// Render participants list
 function renderParticipants(){
   participantsDiv.innerHTML="";
   participants.forEach(p=>{
@@ -70,6 +81,9 @@ function renderParticipants(){
   countSpan.innerText = participants.length;
 }
 
+// Button click
 spinBtn.onclick = spinWheel;
+
+// Initial rendering
 renderParticipants();
 drawWheel(participants.slice(0,30));

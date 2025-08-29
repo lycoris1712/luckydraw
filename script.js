@@ -1,62 +1,59 @@
-const SHEET_URL = "https://script.google.com/macros/s/AKfycbysj-eMQ4wOAQZOnxJ8TchNGW5C7p8ZozCAGjKdnMpCKUd3yD-bHEVT6hN1mr_jlM5e/exec";
-const START_NUM = 300;
-const END_NUM = 1300;
+const API_URL = "YOUR_WEB_APP_URL_HERE";
 
-document.addEventListener("DOMContentLoaded", () => {
-  loadSeats();
+// Generate cinema seats (300–1300)
+const seatsContainer = document.getElementById("seats");
+for (let i = 300; i <= 1300; i++) {
+  let seat = document.createElement("div");
+  seat.className = "seat";
+  seat.innerText = i;
+  seat.id = "seat-" + i;
+  seatsContainer.appendChild(seat);
+}
 
-  const form = document.getElementById("registerForm");
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const name = document.getElementById("name").value.trim();
-    if (!name) return;
+// Handle form submit
+document.getElementById("luckyForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  let name = document.getElementById("name").value;
 
-    let taken = await fetch(SHEET_URL).then(res => res.json());
-    let takenNumbers = taken.map(item => parseInt(item.number));
+  // Generate random number
+  let number = Math.floor(Math.random() * (1300 - 300 + 1)) + 300;
 
-    // find available numbers
-    let available = [];
-    for (let i = START_NUM; i <= END_NUM; i++) {
-      if (!takenNumbers.includes(i)) available.push(i);
-    }
-
-    if (available.length === 0) {
-      document.getElementById("result").innerText = "Sorry, all numbers taken!";
-      return;
-    }
-
-    // pick random available number
-    let rand = available[Math.floor(Math.random() * available.length)];
-
-    // save to Google Sheets
-    await fetch(SHEET_URL, {
-      method: "POST",
-      body: JSON.stringify({ name: name, number: rand }),
-    });
-
-    document.getElementById("result").innerText = 
-      🎉 Congratulations ${name}, your lucky number is ${rand}!;
-
-    loadSeats(); // refresh seats
+  // Save to Google Sheet
+  await fetch(API_URL, {
+    method: "POST",
+    body: JSON.stringify({ name, number })
   });
+
+  document.getElementById("result").innerText = 
+    🎉 Hi ${name}, your lucky number is ${number}!;
+
+  loadSeats(); // refresh seats
 });
 
+// Load taken seats from Google Sheets
 async function loadSeats() {
-  const container = document.getElementById("seatContainer");
-  container.innerHTML = "";
+  let res = await fetch(API_URL);
+  let data = await res.json();
 
-  let taken = await fetch(SHEET_URL).then(res => res.json());
-  let takenNumbers = taken.map(item => parseInt(item.number));
-
-  for (let i = START_NUM; i <= END_NUM; i++) {
-    const seat = document.createElement("div");
-    seat.classList.add("seat");
-    seat.innerText = i;
-
-    if (takenNumbers.includes(i)) {
-      seat.classList.add("taken");
-    }
-
-    container.appendChild(seat);
-  }
+  data.forEach(player => {
+    let seat = document.getElementById("seat-" + player.number);
+    if (seat) seat.classList.add("taken");
+  });
 }
+
+// 🎡 Spin the Wheel
+document.getElementById("spinButton").addEventListener("click", async () => {
+  let res = await fetch(API_URL);
+  let data = await res.json();
+
+  if (data.length === 0) {
+    alert("No players yet!");
+    return;
+  }
+
+  let randomWinner = data[Math.floor(Math.random() * data.length)];
+
+  alert(`🎉 The winner is ${randomWinner.name} with number ${randomWinner.number}!`);
+});
+
+loadSeats(); // initial load

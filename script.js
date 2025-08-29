@@ -32,14 +32,24 @@ document.getElementById("luckyForm").addEventListener("submit", async (e) => {
 
 // Load taken seats from Google Sheets
 async function loadSeats() {
+  let seatDiv = document.getElementById("seats");
+  seatDiv.innerHTML = "";
+
   let res = await fetch(API_URL);
   let data = await res.json();
+  let takenNumbers = data.map(d => parseInt(d.number));
 
-  data.forEach(player => {
-    let seat = document.getElementById("seat-" + player.number);
-    if (seat) seat.classList.add("taken");
-  });
-}
+  for (let i = 300; i <= 1300; i++) {
+    let seat = document.createElement("div");
+    seat.classList.add("seat");
+    seat.innerText = i; // 👈 show seat number
+
+    if (takenNumbers.includes(i)) {
+      seat.classList.add("taken");
+    }
+
+    seatDiv.appendChild(seat);
+  }
 
 // 🎡 Spin the Wheel
 document.getElementById("spinButton").addEventListener("click", async () => {

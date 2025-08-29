@@ -15,7 +15,7 @@ body {
   text-align: center;
 }
 
-h1, h2 {
+h1 {
   font-weight: 700;
 }
 
@@ -36,12 +36,20 @@ h1, h2 {
   align-items: center;
   font-weight: bold;
   color: white;
-  transition: background 0.5s;
-  margin: 2px;
+  cursor: pointer;
+  transition: transform 0.2s;
 }
 
 .seat:hover {
-  box-shadow: 0 0 10px #fff;
+  transform: scale(1.1);
+}
+
+.seat.taken {
+  background-color: grey;
+}
+
+.seat.available {
+  background-color: green;
 }
 
 .confirmation-card {
@@ -57,11 +65,4 @@ h1, h2 {
 @keyframes glow {
   from { box-shadow: 0 0 5px #fff; }
   to { box-shadow: 0 0 20px #fff; }
-}
-
-canvas#wheel {
-  border-radius: 50%;
-  box-shadow: 0 0 20px #fff;
-  margin: 20px auto;
-  display: block;
 }

@@ -3,10 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Panel</title>
+<title>Admin Panel - Lucky Draw</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 
-<!-- Firebase SDK -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
@@ -22,25 +23,25 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-
 window.db = db;
 </script>
 
-<!-- Canvas Confetti -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 </head>
 <body>
-<h1>Admin Panel</h1>
-<p>Total participants: <span id="count">0</span></p>
+<div class="container">
+  <h1>Admin Panel 🎯</h1>
 
-<div id="participants"></div>
+  <p>Total participants: <span id="count">0</span></p>
+  <div id="participants"></div>
 
-<canvas id="wheel" width="400" height="400"></canvas>
-<button id="spin">Spin the Wheel (30 participants only)</button>
+  <canvas id="wheel" width="400" height="400"></canvas>
+  <button id="spin">Spin the Wheel (30 max)</button>
 
-<h2>Winner:</h2>
-<p id="winner"></p>
+  <h2>Winner:</h2>
+  <p id="winner"></p>
+</div>
 
 <script type="module" src="confetti.js"></script>
 <script type="module" src="admin.js"></script>

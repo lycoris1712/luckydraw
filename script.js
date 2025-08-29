@@ -6,7 +6,7 @@ const submitBtn = document.getElementById('submit-btn');
 const nameInput = document.getElementById('name-input');
 const confirmation = document.getElementById('confirmation');
 
-const allNumbers = Array.from({length: 1001}, (_, i) => 300 + i); // 300-1300
+const allNumbers = Array.from({length: 1001}, (_, i) => 300 + i);
 
 async function renderSeats() {
   seatGrid.innerHTML = "";
@@ -28,7 +28,7 @@ async function assignNumber(name) {
 
   const availableNumbers = allNumbers.filter(n => !takenNumbers.includes(n));
   if(availableNumbers.length === 0){
-    confirmation.innerText = "Sorry, all lucky numbers (300–1300) have been assigned!";
+    confirmation.innerText = "Sorry, all numbers (300–1300) are taken!";
     return;
   }
 

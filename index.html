@@ -6,17 +6,24 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>🎟️ Lucky Draw Registration</h1>
+  <h1>🎉 Lucky Draw Registration 🎉</h1>
 
-  <form id="registerForm">
-    <input type="text" id="name" placeholder="Enter your name" required>
-    <button type="submit">Get My Lucky Number</button>
+  <!-- Form -->
+  <form id="luckyForm">
+    <label for="name">Enter your name:</label>
+    <input type="text" id="name" required>
+    <button type="submit">Get My Number</button>
   </form>
 
   <p id="result"></p>
 
+  <!-- Cinema seats (numbers 300–1300) -->
   <h2>Available Numbers</h2>
-  <div id="seatContainer"></div>
+  <div id="seats"></div>
+
+  <!-- Spin Wheel Button -->
+  <button id="spinButton">🎡 Spin the Wheel</button>
+  <canvas id="wheelCanvas" width="400" height="400"></canvas>
 
   <script src="script.js"></script>
 </body>

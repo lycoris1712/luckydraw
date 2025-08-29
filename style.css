@@ -1,36 +1,40 @@
 body {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  margin: 20px;
-}
-
-#seats {
-  display: grid;
-  grid-template-columns: repeat(20, 1fr);
-  gap: 2px;
-  max-width: 800px;
-  margin: auto;
-}
-
-.seat {
-  width: 30px;
-  height: 30px;
-  background: green;
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
   color: white;
-  font-size: 12px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  padding: 20px;
 }
-#screen {
-  width: 80%;
-  height: 40px;
-  margin: 10px auto 30px;
-  background: #fff;
-  border-radius: 5px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.5);
 
-.taken {
-  background: white;
-  color: black;
+h1 {
+  margin-bottom: 10px;
+}
+
+#seat-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 50px);
+  gap: 10px;
+  margin-top: 20px;
+}
+
+button {
+  background: rgba(255,255,255,0.1);
+  border: 2px solid #0ff;
+  border-radius: 10px;
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+button:hover {
+  background: rgba(0,255,255,0.3);
+  transform: scale(1.1);
+}
+
+button:disabled {
+  background: gray;
+  cursor: not-allowed;
 }

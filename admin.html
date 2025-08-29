@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lucky Draw 2025</title>
+<title>Admin Panel</title>
 <link rel="stylesheet" href="style.css">
 
 <!-- Firebase SDK -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY",
@@ -24,24 +24,22 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 window.db = db;
-window.addDoc = addDoc;
 window.collection = collection;
 window.getDocs = getDocs;
 </script>
 
 </head>
 <body>
-<h1>Lucky Draw 2025</h1>
+<h1>Admin Panel</h1>
+<p>Total participants: <span id="count">0</span></p>
 
-<div id="form-div">
-  <input type="text" id="name-input" placeholder="Enter your name" />
-  <button id="submit-btn">Submit</button>
-</div>
+<h2>All Participants:</h2>
+<div id="participants"></div>
 
-<p id="confirmation"></p>
+<button id="spin">Spin the Wheel (30 participants only)</button>
+<h2>Winner:</h2>
+<p id="winner"></p>
 
-<div id="seat-grid"></div>
-
-<script type="module" src="script.js"></script>
+<script type="module" src="admin.js"></script>
 </body>
 </html>

@@ -8,7 +8,6 @@ const confirmation = document.getElementById('confirmation');
 
 const allNumbers = Array.from({length: 1001}, (_, i) => 300 + i); // 300-1300
 
-// Render seats layout
 async function renderSeats() {
   seatGrid.innerHTML = "";
   const snapshot = await getDocs(collection(db, "participants"));
@@ -23,7 +22,6 @@ async function renderSeats() {
   });
 }
 
-// Assign random number to new participant
 async function assignNumber(name) {
   const snapshot = await getDocs(collection(db, "participants"));
   const takenNumbers = snapshot.docs.map(doc => doc.data().number);
@@ -48,8 +46,11 @@ async function assignNumber(name) {
   await renderSeats();
 }
 
-// Submit button click
 submitBtn.onclick = () => {
   const name = nameInput.value.trim();
   if(!name) return alert("Please enter your name.");
-  assignNumber(n
+  assignNumber(name);
+  nameInput.value = "";
+}
+
+renderSeats();

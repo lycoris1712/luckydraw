@@ -1,4 +1,5 @@
 import { db, collection, addDoc, getDocs } from './index.html';
+import { launchConfetti } from './confetti.js';
 
 const seatGrid = document.getElementById('seat-grid');
 const submitBtn = document.getElementById('submit-btn');
@@ -27,7 +28,6 @@ async function assignNumber(name) {
   const snapshot = await getDocs(collection(db, "participants"));
   const takenNumbers = snapshot.docs.map(doc => doc.data().number);
 
-  // Check if all numbers are assigned
   const availableNumbers = allNumbers.filter(n => !takenNumbers.includes(n));
   if(availableNumbers.length === 0){
     confirmation.innerText = "Sorry, all lucky numbers (300–1300) have been assigned!";
@@ -43,7 +43,8 @@ async function assignNumber(name) {
     timestamp: new Date()
   });
 
-  confirmation.innerText = `Hi ${name}, your lucky number is ${assignedNumber}!`;
+  confirmation.innerHTML = `<div class="confirmation-card">Hi ${name}, your lucky number is ${assignedNumber}!</div>`;
+  launchConfetti();
   await renderSeats();
 }
 
@@ -51,9 +52,4 @@ async function assignNumber(name) {
 submitBtn.onclick = () => {
   const name = nameInput.value.trim();
   if(!name) return alert("Please enter your name.");
-  assignNumber(name);
-  nameInput.value = "";
-}
-
-// Initial render
-renderSeats();
+  assignNumber(n

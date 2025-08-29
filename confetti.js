@@ -1,4 +1,4 @@
-export function launchConfetti() {
+function launchConfetti() {
   const duration = 3 * 1000;
   const end = Date.now() + duration;
 
@@ -21,3 +21,5 @@ export function launchConfetti() {
     }
   })();
 }
+
+window.launchConfetti = launchConfetti;

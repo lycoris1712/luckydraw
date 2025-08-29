@@ -5,29 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lucky Draw 2025</title>
 
-<!-- Google Fonts for aesthetic look -->
+<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
-
 <link rel="stylesheet" href="style.css">
-
-<!-- Firebase -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-window.db = db;
-</script>
 
 <!-- Confetti -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -44,11 +24,10 @@ window.db = db;
 
   <p id="confirmation"></p>
 
-  <!-- Cinema seat grid -->
   <div id="seat-grid"></div>
 </div>
 
-<script type="module" src="confetti.js"></script>
-<script type="module" src="script.js"></script>
+<script src="script.js"></script>
+<script src="confetti.js"></script>
 </body>
 </html>

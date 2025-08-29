@@ -8,14 +8,6 @@ body {
   padding: 20px;
 }
 
-h1 { margin-bottom: 10px; }
-#seat-grid {
-  display: grid;
-  grid-template-columns: repeat(10, 50px);
-  gap: 10px;
-  margin-top: 20px;
-}
-
 .seat {
   width: 50px;
   height: 50px;
@@ -25,7 +17,37 @@ h1 { margin-bottom: 10px; }
   align-items: center;
   font-weight: bold;
   color: white;
+  transition: background 0.5s;
+  margin: 2px;
 }
-#form-div { margin-bottom: 20px; }
-input { padding: 8px; border-radius: 5px; border: none; margin-right: 5px; }
-button { padding: 8px 12px; border-radius: 5px; border: none; cursor: pointer; }
+
+.seat:hover {
+  box-shadow: 0 0 10px #fff;
+}
+
+.confirmation-card {
+  background: linear-gradient(135deg,#ff4081,#7c4dff);
+  padding: 10px 20px;
+  border-radius: 10px;
+  margin: 10px 0;
+  text-align: center;
+  font-weight: bold;
+  animation: glow 1s infinite alternate;
+}
+
+@keyframes glow {
+  from { box-shadow: 0 0 5px #fff; }
+  to { box-shadow: 0 0 20px #fff; }
+}
+
+#wheel {
+  border-radius: 50%;
+  box-shadow: 0 0 20px #fff;
+  margin: 20px;
+}
+
+#winner {
+  font-size: 2rem;
+  margin-top: 20px;
+  font-weight: bold;
+}

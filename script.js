@@ -1,4 +1,4 @@
-const API_URL = "YOUR_WEB_APP_URL_HERE";
+const API_URL = "https://script.google.com/macros/s/AKfycbxhOr3ywsJhEcQfpbBsxr6Vxq-17bc5ZRfqpqogiLXxH99Goco5EQaG6L8oEa0sYYEy/exec";
 
 // Generate cinema seats (300–1300)
 const seatsContainer = document.getElementById("seats");

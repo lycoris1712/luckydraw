@@ -1,18 +1,13 @@
-import { db, collection, addDoc, getDocs } from './index.html';
-import { launchConfetti } from './confetti.js';
-
 const seatGrid = document.getElementById('seat-grid');
 const submitBtn = document.getElementById('submit-btn');
 const nameInput = document.getElementById('name-input');
 const confirmation = document.getElementById('confirmation');
 
-const allNumbers = Array.from({length: 1001}, (_, i) => 300 + i);
+let allNumbers = Array.from({length: 1001}, (_, i) => 300 + i);
+let takenNumbers = [];
 
-async function renderSeats() {
+function renderSeats() {
   seatGrid.innerHTML = "";
-  const snapshot = await getDocs(collection(db, "participants"));
-  const takenNumbers = snapshot.docs.map(doc => doc.data().number);
-
   allNumbers.forEach(num => {
     const seat = document.createElement("div");
     seat.className = "seat";
@@ -22,28 +17,18 @@ async function renderSeats() {
   });
 }
 
-async function assignNumber(name) {
-  const snapshot = await getDocs(collection(db, "participants"));
-  const takenNumbers = snapshot.docs.map(doc => doc.data().number);
-
+function assignNumber(name) {
   const availableNumbers = allNumbers.filter(n => !takenNumbers.includes(n));
   if(availableNumbers.length === 0){
     confirmation.innerText = "Sorry, all numbers (300–1300) are taken!";
     return;
   }
-
   const randomIndex = Math.floor(Math.random() * availableNumbers.length);
   const assignedNumber = availableNumbers[randomIndex];
-
-  await addDoc(collection(db, "participants"), {
-    name: name,
-    number: assignedNumber,
-    timestamp: new Date()
-  });
-
+  takenNumbers.push(assignedNumber);
   confirmation.innerHTML = `<div class="confirmation-card">Hi ${name}, your lucky number is ${assignedNumber}!</div>`;
-  launchConfetti();
-  await renderSeats();
+  window.launchConfetti();
+  renderSeats();
 }
 
 submitBtn.onclick = () => {
